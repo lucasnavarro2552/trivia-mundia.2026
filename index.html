@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Mundial 2026 con Ranking Global</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <header>
+            <h1>🏆 Trivia Mundial 2026 ⚽</h1>
+            <p>Canadá, Estados Unidos y México</p>
+        </header>
+
+        <!-- Pantalla de Inicio / Registro de Nickname -->
+        <div id="welcome-screen" class="screen">
+            <p>Demuestra cuánto sabes sobre el Mundial actual de 48 equipos. Te esperan 10 preguntas aleatorias.</p>
+            <div class="login-form">
+                <label for="nickname-input">Ingresa tu Nickname para registrar tu puntuación:</label>
+                <input type="text" id="nickname-input" placeholder="Ej. Golazo99" maxlength="15" autocomplete="off">
+                <span id="error-msg" class="error-text hide">Debes ingresar un nick válido</span>
+            </div>
+            <button id="start-btn" class="btn">¡Comenzar Juego!</button>
+        </div>
+
+        <!-- Pantalla de Juego -->
+        <div id="quiz-screen" class="screen hide">
+            <div class="quiz-info">
+                <span id="question-number">Pregunta 1 de 10</span>
+                <span id="score-counter">Puntos: 0</span>
+            </div>
+            <div id="question-text" class="question">Cargando pregunta...</div>
+            <div id="options-container" class="options-grid">
+                <!-- Se generan dinámicamente con JS -->
+            </div>
+            <button id="next-btn" class="btn hide">Siguiente Pregunta</button>
+        </div>
+
+        <!-- Pantalla de Resultados y Ranking -->
+        <div id="result-screen" class="screen hide">
+            <h2>Fin de la Trivia</h2>
+            
+            <div class="final-score">
+                <p><strong id="user-display">Jugador</strong>, tu puntuación final es:</p>
+                <h3 id="final-points">0 / 10</h3>
+                <p id="feedback-msg"></p>
+            </div>
+
+            <!-- Tabla de posiciones (Ranking conectado a Supabase) -->
+            <div class="ranking-section">
+                <h3>📊 Tabla de Posiciones Global</h3>
+                <table id="ranking-table">
+                    <thead>
+                        <tr>
+                            <th>Puesto</th>
+                            <th>Usuario</th>
+                            <th>Puntos</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ranking-body">
+                        <!-- Las filas se generarán desde la base de datos con JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <button id="restart-btn" class="btn">Cambiar de Usuario / Reiniciar</button>
+        </div>
+    </div>
+
+    <!-- Conexión con la librería de Supabase para poder usar "supabase.createClient" en tu script -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Tu script de juego personalizado -->
+    <script src="script.js"></script>
+</body>
+</html>
