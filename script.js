@@ -1,8 +1,8 @@
 // --- CONFIGURACIÓN DE SUPABASE ---
-// Inicialización automática con tus credenciales reales del proyecto
+// Usamos 'supabaseClient' para evitar el conflicto con la librería global
 const SUPABASE_URL = "https://zekujsyserfsgmvwvksp.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpla3Vqc3lzZXJmc2dtdnd2a3NwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0MTkwMjksImV4cCI6MjA5Nzk5NTAyOX0.gYVV_bcca8e7xhiE2LxESm-45pMMj_KUh2YRB9oxkZk";
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Base de datos de preguntas sobre el Mundial 2026
 const questionsPool = [
@@ -42,7 +42,7 @@ const questionsPool = [
         answer: 2
     },
     {
-        question: "¿Cuál de estos países debuta organizando una Copa del Mundo absoluta masculina?",
+        question: "Cuál de estos países debuta organizando una Copa del Mundo absoluta masculina?",
         options: ["México", "Canadá", "Estados Unidos", "Ninguno, todos ya la organizaron"],
         answer: 1
     },
@@ -62,7 +62,7 @@ const questionsPool = [
         answer: 0
     },
     {
-        question: "Qué confederación continental ganó más cupos directos pasando de 5 a 9 clasificados?",
+        question: "¿Qué confederación continental ganó más cupos directos pasando de 5 a 9 clasificados?",
         options: ["CONMEBOL (Sudamérica)", "UEFA (Europa)", "CAF (África)", "AFC (Asia)"],
         answer: 2
     },
@@ -219,7 +219,7 @@ async function saveScoreAndShowResults() {
 
     try {
         // ENVIAR el nuevo puntaje a la tabla 'ranking' de Supabase
-        await supabase
+        await supabaseClient
             .from('ranking')
             .insert([{ name: playerNickname, points: score }]);
 
@@ -236,7 +236,7 @@ async function fetchAndRenderRanking() {
     rankingBody.innerHTML = "<tr><td colspan='3'>Cargando ranking mundial...</td></tr>";
     
     try {
-        const { data: ranking, error } = await supabase
+        const { data: ranking, error } = await supabaseClient
             .from('ranking')
             .select('*')
             .order('points', { ascending: false }) // Mayor puntaje primero
